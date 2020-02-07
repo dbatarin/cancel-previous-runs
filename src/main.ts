@@ -13,7 +13,7 @@ async function run(): Promise<void> {
     const branchPrefix = 'refs/heads/'
     const tagPrefix = 'refs/tags/'
 
-    if (!['push', 'pull_request'].includes(eventName)) {
+    if (!['push', 'pull_request', 'repository_dispatch'].includes(eventName)) {
       core.info('Skipping unsupported event')
       return
     }
@@ -40,7 +40,7 @@ async function run(): Promise<void> {
       owner,
       repo,
       branch,
-      event: pullRequest ? 'pull_request' : 'push'
+      event: eventName
     })
 
     let matched = false
